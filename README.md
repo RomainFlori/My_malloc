@@ -1,6 +1,6 @@
 ![C](https://img.shields.io/badge/C-malloc-red)
 ![C](https://img.shields.io/badge/my.epitech.eu-80%25-brightgreen)
-# My_malloc
+# malloc 79%
 Recode of Malloc for Epitech second year, Promo 2024.
 
 # Made without Linked list !
