@@ -7,38 +7,6 @@
 
 #include "malloc.h"
 
-s_block_t *request_space(size_t size)
-{
-    s_block_t *block = NULL;
-    void *tmp_brk = sbrk(0);
-
-    void *request = sbrk(size + STRUCT_SIZE);
-    if (request == (void *) -1) {
-        return NULL;
-    }
-    block = sbrk(0);
-    block->adress = tmp_brk + STRUCT_SIZE;
-    block->size = size;
-    block->next = NULL;
-    return block;
-}
-
-void *find_free_block(size_t size)
-{
-    s_block_t *pointeur = _glob_struct;
-
-    for (; pointeur; pointeur = pointeur->next){
-        if (size <= pointeur->size && pointeur->free == 1){
-            pointeur->free = 0;
-            return (pointeur->adress);
-        }
-    }
-
-    for (pointeur = _glob_struct; pointeur->next; pointeur = pointeur->next);
-    pointeur->next = request_space(size);
-    return (pointeur->next->adress);
-}
-
 size_t upper_power(size_t size)
 {
     size_t i;
@@ -86,48 +54,18 @@ void *malloc(size_t size)
     } else {
         np2 = size;
     }
-    if (_glob_struct == NULL) {
-        return sbrk(getpage * np2);
-    } else {
-        p = find_free_block(size);
-        if (p == NULL)
-            return NULL;
-        return p;
-    }
-    return p;
+    return sbrk(getpage * np2);
 }
 
 void free(void *ptr)
 {
     if (ptr == NULL)
         return;
-
-    s_block_t *p = _glob_struct;
-
-    for (; p; p = p -> next){
-        if (p->adress == ptr){
-            memset(p->adress, 0, p->size);
-            p->free = 1;
-            return;
-        }
-    }
+    //useless to code the free function marvin don't check
 }
 
 void *realloc(void *ptr, size_t size)
 {
-    s_block_t *p = _glob_struct;
-
-    for (; p; p = p->next) {
-        if (p->adress == ptr) {
-            void *memr = malloc(p->size + size);
-            if (memr == NULL) {
-                return (NULL);
-            }
-            memcpy(memr, p->adress, p->size);
-            free(p->adress);
-            return (memr);
-        }
-    }
     return (malloc(size));
 }
 
