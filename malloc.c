@@ -47,7 +47,6 @@ void *malloc(size_t size)
     size = (size <= 0) ? 8 : size;
     size_t getpage = getpagesize();
     size_t np2 = 0;
-    void *p = NULL;
 
     if (isPowerOfTwo(size) == 0) {
         np2 = nextPower_2(size);
