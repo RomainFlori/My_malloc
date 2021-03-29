@@ -7,7 +7,6 @@ Recode of Malloc for Epitech second year, Promo 2024
 ----------
 
 > **Disclamers:**
-
 > - Don't copy my code. If you push my repos, you will get -42.
 
 ----------
